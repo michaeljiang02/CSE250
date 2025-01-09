@@ -11,6 +11,21 @@ struct Flight {
     float price;
 };
 
+void display(Flight * flights) {
+    cout << "The first 5 flights are:" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "Flight #" << flights[i].flight_number << " from " <<
+            flights[i].departure << " to " << flights[i].arrival << " costs " <<
+                flights[i].price << "$" << endl;
+    }
+    cout << endl;
+    cout << "The last 5 flights are:" << endl;
+    for (int i = 5; i < 10; i++) {
+        cout << "Flight #" << flights[i].flight_number << " from " <<
+            flights[i].departure << " to " << flights[i].arrival << " costs " <<
+                flights[i].price << "$" << endl;
+    }
+}
 
 int main() {
     string line;
@@ -35,6 +50,6 @@ int main() {
             flight_index++;
         }
         myFile.close();
-        cout << flights[1].price << endl;
     }
+    display(flights);
 }
