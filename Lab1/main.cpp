@@ -11,7 +11,14 @@ struct Flight {
     float price;
 };
 
+/**
+* This function displays the first 5 flights of the file as well as the last
+* 5 flights of the file.
+*
+* @param flights    The array containing all the flights of the file.
+*/
 void display(Flight * flights) {
+
     cout << "The first 5 flights are:" << endl;
     for (int i = 0; i < 5; i++) {
         cout << "Flight #" << flights[i].flight_number << " from " <<
@@ -25,6 +32,14 @@ void display(Flight * flights) {
             flights[i].departure << " to " << flights[i].arrival << " costs " <<
                 flights[i].price << "$" << endl;
     }
+}
+
+/**
+* This function prints out the cheapest flight of the file.
+*/
+void cheapest_flight(Flight * flights) {
+    float smallest = flights[0].price;
+
 }
 
 int main() {
