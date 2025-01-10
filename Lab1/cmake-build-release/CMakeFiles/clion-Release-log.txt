@@ -1,0 +1,4 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -S "/Volumes/Michael's Drive/Classes/CSE250/CSE250/Lab1" -B "/Volumes/Michael's Drive/Classes/CSE250/CSE250/Lab1/cmake-build-release"
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Volumes/Michael's Drive/Classes/CSE250/CSE250/Lab1/cmake-build-release
