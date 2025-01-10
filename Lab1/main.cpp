@@ -87,13 +87,13 @@ FlightDataBase read_csv(string filename) {
 
     if (myFile.is_open()) {
         while (getline(myFile, line)) {
-            string values[4];
+            string colValues[4];
             stringstream ss(line);
             for (int i = 0; i < 4; i++) {
-                getline(ss, values[i], ',');
+                getline(ss, colValues[i], ',');
             }
 
-            flightDB.flights[flight_index] = Flight{values[0], values[1], values[2], stof(values[3])};
+            flightDB.flights[flight_index] = Flight{colValues[0], colValues[1], colValues[2], stof(colValues[3])};
             flightDB.size++;
             flight_index++;
         }
