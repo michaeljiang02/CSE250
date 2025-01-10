@@ -16,7 +16,7 @@ struct FlightDataBase {
     int size;
 };
 
-float cheapest_flight(FlightDataBase flightDB) {
+Flight cheapest_flight(FlightDataBase flightDB) {
     Flight cheapest = flightDB.flights[0];
     for (int i = 0; i < flightDB.size; i++) {
         if (flightDB.flights[i].price < cheapest.price) {
@@ -25,9 +25,8 @@ float cheapest_flight(FlightDataBase flightDB) {
     }
     cout << "The cheapest flight is flight #" << cheapest.flight_number <<
         " from " << cheapest.departure << " to " << cheapest.arrival << " at " <<
-            cheapest.price << "$" << endl;
-    cout << endl;
-    return cheapest.price;
+            cheapest.price << "$\n" << endl;
+    return cheapest;
 }
 
 int total_flights(FlightDataBase flightDB, string city) {
@@ -37,23 +36,42 @@ int total_flights(FlightDataBase flightDB, string city) {
         if (flightDB.flights[i].arrival == city) {count++;}
     }
     cout << "There is " << count << " flight arriving at or leaving from " << city << endl;
-    cout << endl;
     return count;
 }
 
-void display(Flight * flights) {
-    cout << "The first 5 flights are:" << endl;
-    for (int i = 0; i < 5; i++) {
-        cout << "Flight #" << flights[i].flight_number << " from " <<
-            flights[i].departure << " to " << flights[i].arrival << " costs " <<
-                flights[i].price << "$" << endl;
+float average_price(FlightDataBase flightDB, string city) {
+    int count = 0;
+    float sum = 0;
+    for (int i = 0; i < flightDB.size; i++) {
+        if (flightDB.flights[i].departure == city) {
+            sum += flightDB.flights[i].price;
+            count++;
+        }
+    }
+    if (count == 0) {
+        cout << "There is no flight leaving " << city << endl;
+        return 0;
+    }
+    float average = sum / count;
+    cout << "The average price to leave " << city << " is " << average << "$" << endl;
+    return average;
+
+}
+
+void display(FlightDataBase flightDB, int n) {
+    cout << flightDB.size << "flights loaded\n" << endl;
+    cout << "The first " << n << " flights are:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Flight #" << flightDB.flights[i].flight_number << " from " <<
+            flightDB.flights[i].departure << " to " << flightDB.flights[i].arrival << " costs " <<
+                flightDB.flights[i].price << "$" << endl;
     }
     cout << endl;
-    cout << "The last 5 flights are:" << endl;
-    for (int i = 5; i < 10; i++) {
-        cout << "Flight #" << flights[i].flight_number << " from " <<
-            flights[i].departure << " to " << flights[i].arrival << " costs " <<
-                flights[i].price << "$" << endl;
+    cout << "The last " << n << " flights are:" << endl;
+    for (int i = flightDB.size - n; i < flightDB.size; i++) {
+        cout << "Flight #" << flightDB.flights[i].flight_number << " from " <<
+            flightDB.flights[i].departure << " to " << flightDB.flights[i].arrival << " costs " <<
+                flightDB.flights[i].price << "$" << endl;
     }
     cout << endl;
 }
@@ -75,13 +93,9 @@ FlightDataBase read_csv(string filename) {
                 getline(ss, values[i], ',');
             }
 
-            string departure = values[0];
-            string arrival = values[1];
-            string flight_number = values[2];
-            float price = stof(values[3]);
-            flightDB.flights[flight_index] = Flight{departure, arrival, flight_number, price};
-            flight_index++;
+            flightDB.flights[flight_index] = Flight{values[0], values[1], values[2], stof(values[3])};
             flightDB.size++;
+            flight_index++;
         }
     }
     myFile.close();
@@ -89,11 +103,22 @@ FlightDataBase read_csv(string filename) {
 }
 
 int main() {
+    // Question 1
     FlightDataBase flightDB = read_csv("Flights10_Winter2025.dat");
-    display(flightDB.flights);
+    display(flightDB, 5);
+
+    // Question 2
     cheapest_flight(flightDB);
+
+    // Question 3
     total_flights(flightDB, "Jacksonville");
     total_flights(flightDB, "Liverpool");
     total_flights(flightDB, "Amsterdam");
     total_flights(flightDB, "Kingston");
+    cout << endl;
+
+    // Question 4
+    average_price(flightDB, "Liverpool");
+    average_price(flightDB, "Jacksonville");
+    average_price(flightDB, "Kingston");
 }
