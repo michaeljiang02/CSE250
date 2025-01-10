@@ -4,6 +4,11 @@
 #include <sstream>
 using namespace std;
 
+/**
+ * The Flight struct stores all the information needed for flights, each
+ * column value in the csv file is stored into the attributes of Flight
+ * and each row in the csv file is a unique flight.
+ */
 struct Flight {
     string departure;
     string arrival;
@@ -79,7 +84,7 @@ void display(FlightDataBase flightDB, int n) {
 FlightDataBase read_csv(string filename) {
     const int MAX_FLIGHTS = 100000;
     FlightDataBase flightDB;
-    flightDB.flights = new Flight[MAX_FLIGHTS];
+    flightDB.flights = new Flight[MAX_FLIGHTS]; // Ideally we would have a dynamic array that resizes itself
     int flight_index = 0;
     ifstream myFile;
     string line;
