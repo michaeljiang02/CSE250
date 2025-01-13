@@ -80,6 +80,18 @@ struct FlightDataBase {
     }
 
     void sort() {
+        for (int i = 1; i < size; i++) {
+            int j = 1;
+            Flight temp = flights[i];
+            while (i - j >= 0 && temp.flight_number < flights[i - j].flight_number) {
+                flights[i - j + 1] = flights[i - j];
+                j++;
+            }
+            flights[i - j + 1] = temp;
+        }
+    }
+
+    void recursiveSort() {
         helperSort(0, size);
     }
 
@@ -163,5 +175,6 @@ int main() {
 
     // Question 5
     flightDB.sort();
+    // flightDB.recursiveSort();
     flightDB.display(10);
 }
