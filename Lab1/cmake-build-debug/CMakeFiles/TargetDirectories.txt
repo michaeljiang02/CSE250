@@ -1,3 +1,0 @@
-/Volumes/Michael's Drive/Classes/CSE250/CSE250/Lab1/cmake-build-debug/CMakeFiles/Lab1.dir
-/Volumes/Michael's Drive/Classes/CSE250/CSE250/Lab1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Volumes/Michael's Drive/Classes/CSE250/CSE250/Lab1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
