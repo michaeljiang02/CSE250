@@ -5,11 +5,14 @@
 #include <chrono>
 using namespace std;
 
+int global_count = 0;
+
 /**
  * The Flight struct stores all the information needed for flights, each
  * column value in the csv file is stored into the attributes of Flight
  * and each row in the csv file is a unique flight.
  */
+
 struct Flight {
     string departure;
     string arrival;
@@ -17,10 +20,10 @@ struct Flight {
     float price;
 };
 
-struct FlightDataBase {
+class FlightDataBase {
+public:
     Flight *flights;
     int size;
-
 
     void selectionSort() {
         for (int i = 0; i < size; i++) {
@@ -34,41 +37,62 @@ struct FlightDataBase {
         }
     }
 
-
-    void swap(int a, int b) {
-        Flight temp = flights[a];
-        flights[a] = flights[b];
-        flights[b] = temp;
-    }
-
     void quickSort() {
         quickSort(0, size - 1);
     }
 
-    void quickSort(int low, int high) {
-        if (high <= low) {
-            return;
-        }
-        int pivot = partition(low, high);
-        quickSort(low, pivot - 1);
-        quickSort(pivot + 1, high);
-    }
-
-    int partition(int low, int high) {
-        int pivot = high;
-        int i = low;
-        for (int j = low; j < high; j++) {
-            if (flights[j].flight_number < flights[pivot].flight_number) {
-                swap(i, j);
-                i++;
-            }
-        }
-        swap(pivot, i);
-        return i;
-    }
-
     void mergeSort() {
         mergeSort(0, size - 1);
+    }
+
+    Flight binarySearch(string flightNumber) {
+        int left = 0;
+        int right = size - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (flightNumber == flights[mid].flight_number) {
+                return flights[mid];
+            }
+            else if (flightNumber > flights[mid].flight_number) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+        return Flight{"","", "", 0};
+    }
+
+    /*
+     * This function prints out the total number of flights in the database, then it
+     * will print out the first n lines and the last n lines of the database.
+     *
+     * @param n      The number of lines displayed in the head and the tail of the database
+     */
+    void display(int n) {
+        cout << size << " flights loaded\n" << endl;
+        cout << "The first " << n << " flights are:" << endl;
+        for (int i = 0; i < n; i++) {
+            cout << "Flight #" << flights[i].flight_number << " from " <<
+                 flights[i].departure << " to " << flights[i].arrival << " costs " <<
+                 flights[i].price << "$" << endl;
+        }
+        cout << endl;
+        cout << "The last " << n << " flights are:" << endl;
+        for (int i = size - n; i < size; i++) {
+            cout << "Flight #" << flights[i].flight_number << " from " <<
+                 flights[i].departure << " to " << flights[i].arrival << " costs " <<
+                 flights[i].price << "$" << endl;
+        }
+        cout << endl;
+    }
+
+private:
+    void swap(int a, int b) {
+        Flight temp = flights[a];
+        flights[a] = flights[b];
+        flights[b] = temp;
     }
 
     void mergeSort(int low, int high) {
@@ -116,32 +140,26 @@ struct FlightDataBase {
         delete[] temp2;
     }
 
-//    Flight* arrayCopyWithInfinity() {
-//        return;
-//    }
+    void quickSort(int low, int high) {
+        if (high <= low) {
+            return;
+        }
+        int pivot = partition(low, high);
+        quickSort(low, pivot - 1);
+        quickSort(pivot + 1, high);
+    }
 
-    /*
-     * This function prints out the total number of flights in the database, then it
-     * will print out the first n lines and the last n lines of the database.
-     *
-     * @param n      The number of lines displayed in the head and the tail of the database
-     */
-    void display(int n) {
-        cout << size << " flights loaded\n" << endl;
-        cout << "The first " << n << " flights are:" << endl;
-        for (int i = 0; i < n; i++) {
-            cout << "Flight #" << flights[i].flight_number << " from " <<
-                 flights[i].departure << " to " << flights[i].arrival << " costs " <<
-                 flights[i].price << "$" << endl;
+    int partition(int low, int high) {
+        int pivot = high;
+        int i = low;
+        for (int j = low; j < high; j++) {
+            if (flights[j].flight_number < flights[pivot].flight_number) {
+                swap(i, j);
+                i++;
+            }
         }
-        cout << endl;
-        cout << "The last " << n << " flights are:" << endl;
-        for (int i = size - n; i < size; i++) {
-            cout << "Flight #" << flights[i].flight_number << " from " <<
-                 flights[i].departure << " to " << flights[i].arrival << " costs " <<
-                 flights[i].price << "$" << endl;
-        }
-        cout << endl;
+        swap(pivot, i);
+        return i;
     }
 };
 
@@ -177,6 +195,60 @@ FlightDataBase read_csv(string filename) {
     }
     myFile.close();
     return flightDB;
+}
+
+void flightDetails(Flight flight, string flight_number) {
+    if (flight.flight_number == "") {
+        cout << "The flight " << flight_number << " does not exist!" << endl;
+    }
+    else {
+        cout << "The flight " << flight.flight_number << " leaves " << flight.departure << " for " << flight.arrival << " and cost " << flight.price << "$" << endl;
+    }
+}
+
+void list_binary_strings(char* array, int n) {
+    array[0] = '0';
+    if (n == 1) {
+        cout << array << endl;
+        array[0] = '1';
+        cout << array << endl;
+        return;
+    }
+    list_binary_strings(&array[1], n - 1);
+}
+
+void list_binary_strings(int n) {
+    char A[n + 1];
+    A[n] = '\0';
+    list_binary_strings(A, n);
+}
+
+
+
+int RecurF(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    else if (n == 1) {
+        return 1;
+    }
+    global_count++;
+    return RecurF(n - 1) + RecurF(n - 2);
+}
+
+int IterF(int n) {
+    int* FibArray = new int[n + 1];
+    FibArray[0] = 0;
+    if (n >= 1) {
+        FibArray[1] = 1;
+    }
+    for (int i = 2; i <= n; i++) {
+        FibArray[i] = FibArray[i - 1] + FibArray[i - 2];
+        global_count++;
+    }
+    int result = FibArray[n];
+    delete [] FibArray;
+    return result;
 }
 
 int main() {
@@ -224,9 +296,48 @@ int main() {
     total = clock() - start;
     cout << "QUICK sorting RESORTING took " << total / CLOCKS_PER_SEC << "s" << endl;
     flightDB.display(5);
-    delete[] flightDB.flights;
 
     // Question 4
     cout << "---------------------- Question 4 ----------------------" << endl;
     cout << "The second run of QuickSort is much slower because the list is already sorted. Since we were instructed to use the last element of the array as the pivot, we always choose the worst possible pivot when the array is sorted. Since the pivot isn't close to the median of the array, we're not actually dividing the problem into a much smaller one. Instead of approximately dividing the problem by 2, we are simply reducing the problem by one which means that it is no longer O(nlog(n)) but rather O(n^2)" << endl;
+    cout << endl;
+
+    // Question 5
+    cout << "---------------------- Question 5 ----------------------" << endl;
+    Flight flight1 = flightDB.binarySearch("US0842");
+    flightDetails(flight1, "US0842");
+
+    Flight flight2 = flightDB.binarySearch("FL0044");
+    flightDetails(flight2, "FL0044");
+
+    Flight flight3 = flightDB.binarySearch("GH2333");
+    flightDetails(flight3, "GH2333");
+
+    delete[] flightDB.flights;
+
+    cout << endl;
+
+    // Question 6
+    cout << "---------------------- Question 6 ----------------------" << endl;
+    list_binary_strings(5);
+    cout << endl;
+
+    // Question 7
+    cout << "---------------------- Question 7 ----------------------" << endl;
+    int n = 12;
+    cout << "The first " << n << " F numbers computed recursively are ";
+    for (int i = 0; i < n; i++) {
+        cout << RecurF(i) << ",";
+    }
+    cout << " it used " << global_count << " additions" << endl;
+
+    global_count = 0;
+    cout << "The first " << n << " F numbers computed iteratively are ";
+    for (int i = 0; i < n; i++) {
+        cout << IterF(i) << ",";
+    }
+    cout << " it used " << global_count << " additions" << endl;
+    cout << endl;
+
+    cout << "The recursive version takes much more additions because it needs to call the function recursively until n becomes 1 every time it calls the function for an n bigger than 2. The issue with this is that the essence of recursion lies in reusing the solution of a smaller n, however, with recursion, even if we already know return value of the function with a smaller input, we still compute it again. For example, fib(4) needs fib(3) which needs fib(2) which needs fib(1), but we shouldn't recompute fib(2) if we already have the answer from a previous computation. This issue can be fixed through caching. The iterative version does not have this problem because each return value is stored inside an array that can be immediately accessed." << endl;
 }
