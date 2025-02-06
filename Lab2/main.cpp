@@ -25,6 +25,10 @@ public:
     Flight *flights;
     int size;
 
+    /*
+     * This function sorts the entire database in lexicographical order based on each flight's
+     * flight number. It uses selection sort, it takes no arguments and returns nothing.
+     */
     void selectionSort() {
         for (int i = 0; i < size; i++) {
             int min = i;
@@ -37,14 +41,29 @@ public:
         }
     }
 
+    /*
+     * This is the driver function that kicks off the recursive quick sort process. It takes no arguments and returns nothing
+     * it simply calls the helper function.
+     */
     void quickSort() {
         quickSort(0, size - 1);
     }
 
+    /*
+     * This is the driver function that kicks off the recursive merge sort process. It takes no arguments and returns nothing
+     * it simply calls the helper function.
+     */
     void mergeSort() {
         mergeSort(0, size - 1);
     }
 
+    /*
+     * This function searches for a specific flight by its flight number using binary search. It is O(log(n)).
+     *
+     * @param flightNumber      The flight number of the flight we want to search
+     * @return                  Flight object with the inputted flight number or a Flight object
+     *                          with no attributes if not flight has the flight number.
+     */
     Flight binarySearch(string flightNumber) {
         int left = 0;
         int right = size - 1;
@@ -54,7 +73,7 @@ public:
             if (flightNumber == flights[mid].flight_number) {
                 return flights[mid];
             }
-            else if (flightNumber > flights[mid].flight_number) {
+            if (flightNumber > flights[mid].flight_number) {
                 left = mid + 1;
             }
             else {
@@ -89,12 +108,26 @@ public:
     }
 
 private:
+    /*
+    * This function swaps two flights in the database by their indices.
+    *
+    * @param a      Index of the first object we want to swap.
+    * @param b      Index of the second object we want to swap.
+    */
     void swap(int a, int b) {
         Flight temp = flights[a];
         flights[a] = flights[b];
         flights[b] = temp;
     }
 
+    /*
+    * This is the helper function of the recursive merge sort function. It recursively
+    * calls itself, dividing the problem in two, until each subarray have only one element and merges them back together
+    * in sorted order.
+    *
+    * @param low        The index of the lower bound of the subarray.
+    * @param high       The index of the upper bound of the subarray.
+    */
     void mergeSort(int low, int high) {
         if (low >= high) {
             return;
@@ -105,6 +138,15 @@ private:
         merge(low, mid, high);
     }
 
+    /*
+    * The merge function divides a subarray of the original array into two sorted arrays,
+    * it then compares each element of both arrays one by one, and adds the smaller
+    * value object to the original array until the "infinity" object is reached on both arrays.
+    *
+    * @param low        The index of the lower bound of the subarray.
+    * @param mid        The index of the middle point of the subarray.
+    * @param high       The index of the upper bound of the subarray.
+    */
     void merge(int low, int mid, int high) {
         int t1 = mid - low + 1;
         Flight *temp1 = new Flight[t1 + 1];
@@ -206,30 +248,29 @@ void flightDetails(Flight flight, string flight_number) {
     }
 }
 
-void list_binary_strings(char* array, int n) {
-    array[0] = '0';
-    if (n == 1) {
-        cout << array << endl;
-        array[0] = '1';
+void list_binary_strings(char* array, int n, int current) {
+    if (current == n) {
         cout << array << endl;
         return;
     }
-    list_binary_strings(&array[1], n - 1);
+    array[current] = '0';
+    list_binary_strings(array, n, current + 1);
+    array[current] = '1';
+    list_binary_strings(array, n, current + 1);
 }
 
 void list_binary_strings(int n) {
     char A[n + 1];
     A[n] = '\0';
-    list_binary_strings(A, n);
+    list_binary_strings(A, n, 0);
+    delete[] A;
 }
-
-
 
 int RecurF(int n) {
     if (n == 0) {
         return 0;
     }
-    else if (n == 1) {
+    if (n == 1) {
         return 1;
     }
     global_count++;
