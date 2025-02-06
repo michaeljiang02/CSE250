@@ -182,6 +182,13 @@ private:
         delete[] temp2;
     }
 
+    /*
+     * This is the helper function that first partitions the array and then recursively calls
+     * quicksort on both sides of a partitioned array omitting the pivot.
+     *
+     * @param low       The index of the lower bound of the subarray.
+     * @param high      The index of the upper bound of the subarray.
+     */
     void quickSort(int low, int high) {
         if (high <= low) {
             return;
@@ -191,6 +198,12 @@ private:
         quickSort(pivot + 1, high);
     }
 
+    /*
+     * This function partitions an array by choosing the last element as the pivot.
+     *
+     * @param low       The index of the lower bound of the subarray.
+     * @param high      The index of the upper bound of the subarray.
+     */
     int partition(int low, int high) {
         int pivot = high;
         int i = low;
@@ -239,6 +252,13 @@ FlightDataBase read_csv(string filename) {
     return flightDB;
 }
 
+/*
+ * This function prints out all the information of a flight by accessing its attributes.
+ * Prints out a special message if the flight doesn't exist.
+ *
+ * @param flight            Flight object we are looking for.
+ * @param flight_number     Flight number of the flight we are looking for.
+ */
 void flightDetails(Flight flight, string flight_number) {
     if (flight.flight_number == "") {
         cout << "The flight " << flight_number << " does not exist!" << endl;
@@ -248,24 +268,44 @@ void flightDetails(Flight flight, string flight_number) {
     }
 }
 
-void list_binary_strings(char* array, int n, int current) {
+/*
+ * This is the helper function that generates binary numbers in an array. The inductive step
+ * n + 1 is that we simply add '0' and '1' in front of all the possible permutations of
+ * n. We will therefore double the permutations at each step. At each call to this function,
+ * we set the value of the current index to 0 and then we recursively call the function
+ * by incrementing the current index. We then do the same for 1. The function stop calling itself
+ * when the current index has reached the end of the array, only then will it output the
+ * content of the array to the console.
+ */
+void binary_helper(char* array, int n, int current) {
     if (current == n) {
         cout << array << endl;
         return;
     }
     array[current] = '0';
-    list_binary_strings(array, n, current + 1);
+    binary_helper(array, n, current + 1);
     array[current] = '1';
-    list_binary_strings(array, n, current + 1);
+    binary_helper(array, n, current + 1);
 }
 
+/*
+ * This is the driver function that kicks of the recursive process of listing all binary strings
+ * of n characters. It creates an array that it will pass into the helper function.
+ *
+ * @param n     The number of characters we want in our binary strings.
+ */
 void list_binary_strings(int n) {
     char A[n + 1];
     A[n] = '\0';
-    list_binary_strings(A, n, 0);
-    delete[] A;
+    binary_helper(A, n, 0);
 }
 
+/*
+ * This function returns the n-th number of the Fibonacci sequence starting from n = 0.
+ * It computes the result recursively.
+ *
+ * @param n     The position of the number in the Fibonacci sequence that we are looking for.
+ */
 int RecurF(int n) {
     if (n == 0) {
         return 0;
@@ -277,6 +317,12 @@ int RecurF(int n) {
     return RecurF(n - 1) + RecurF(n - 2);
 }
 
+/*
+ * This function returns the n-th number of the Fibonacci sequence starting from n = 0.
+ * It computes the result iteratively.
+ *
+ * @param n     The position of the number in the Fibonacci sequence that we are looking for.
+ */
 int IterF(int n) {
     int* FibArray = new int[n + 1];
     FibArray[0] = 0;
@@ -294,7 +340,7 @@ int IterF(int n) {
 
 int main() {
     // Question 1
-    FlightDataBase flightDB = read_csv("Flights10_Winter2025.dat");
+    FlightDataBase flightDB = read_csv("FlightsAll_Winter2025.dat");
     cout << "---------------------- Question 1 ----------------------" << endl;
     flightDB.display(5);
     clock_t start = clock();
@@ -325,7 +371,7 @@ int main() {
     delete[] flightDB.flights;
 
     // Question 3
-    flightDB = read_csv("Flights10_Winter2025.dat");
+    flightDB = read_csv("FlightsAll_Winter2025.dat");
     cout << "---------------------- Question 3 ----------------------" << endl;
     start = clock();
     flightDB.quickSort();
