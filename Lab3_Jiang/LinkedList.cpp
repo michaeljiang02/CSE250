@@ -20,7 +20,11 @@ using namespace std;
 
 /** Constructs an empty list.  */
 LinkedList::LinkedList() {
-    //TODO
+    sentinel = new Node();
+    sentinel->next = sentinel;
+    sentinel->prev = sentinel;
+    sentinel->value = "0";
+    length = 0;
 };
 
 /** Deletes an empty list by freeing nodes memory. */
@@ -34,17 +38,22 @@ LinkedList::~LinkedList() {
  * Return: Length of the list
  */
 int LinkedList::Length() {
-    //TODO
-	return 0;
+    return length;
 }
 
 /** Prints all the element of the list using cout, on a single line, separated by a comma. eg: [3, 19, 2, 36].*/
 void LinkedList::PrintList() {
-    if (m_First != nullptr) {
-        //TODO
-
-    } else {
+    Node* walker = sentinel->next;
+    if (walker == nullptr) {
         cout << "[]" << endl;
+    }
+    else {
+        cout << "[";
+        while (walker->next != sentinel) {
+            cout << walker->value << ", ";
+            walker = walker->next;
+        }
+        cout << walker->value << "]" << endl;
     }
 }
 
@@ -52,7 +61,13 @@ void LinkedList::PrintList() {
  * Args: new_value is the new string to put in the list
  */
 void LinkedList::InsertFirst(const string &new_value){
-	//TODO
+    Node* first = new Node();
+    first->value = new_value;
+    first->prev = sentinel;
+    first->next = sentinel->next;
+    sentinel->next->prev = first;
+    sentinel->next = first;
+    length++;
 }
 
 
@@ -60,11 +75,14 @@ void LinkedList::InsertFirst(const string &new_value){
  * Return: The string removed, or "" if empty
  */
 string LinkedList::RemoveFirst() {
+    Node* m_First = sentinel->next;
 	if (m_First != nullptr) {
 		string ret = m_First->value;
 		Node* todel = m_First;
-		//TODO
+		sentinel->next = m_First->next;
+        m_First->next->prev = sentinel;
 		delete todel;
+        length--;
 		return ret;
 	} else {
 		return string("");
@@ -75,8 +93,14 @@ string LinkedList::RemoveFirst() {
  *  Args: index node position =  1st node at index 0, 2nd at index 1, etc...
  *  Return: "" if the index does not exists */
 string LinkedList::GetValueAt(int index) {
-	//TODO
-	return "";
+    if (index >= length) {
+        return string("");
+    }
+	Node* walker = sentinel->next;
+    for (int i = 0; i < index; i++) {
+        walker = walker->next;
+    }
+	return walker->value;
 }
 
 

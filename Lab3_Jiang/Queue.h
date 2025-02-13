@@ -45,7 +45,7 @@ private:
 		bool Enqueue(int new_value);
 		/** Removes the element at the front of the queue and returns the element in the argument,
 		 * returns true if succeed, and false if the queue is already full.  */
-		bool Dequeue();
+		bool Dequeue(int &old_value);
 };
 
 #endif /* QUEUE_H_ */

@@ -30,8 +30,8 @@ class LinkedList
 {
 	private:
 		/** Pointer to the first node. */
-		Node* m_First;
-		// TODO: Add other instance variables or helper methods if needed
+        Node* sentinel;
+        int length;
 
 	public:
 		/** Constructs an empty list. */

@@ -19,7 +19,12 @@ Queue::Queue(int new_max_size) {
     m_MaxSize = new_max_size;
     m_Data = new int[m_MaxSize];
     m_First = 0;
-    m_Last = 1;
+    if (new_max_size == 1) {
+        m_Last = 0;
+    }
+    else {
+        m_Last = 1;
+    }
     length = 0;
 }
 
@@ -46,10 +51,11 @@ bool Queue::Enqueue(int new_value) {
     return true;
 }
 
-bool Queue::Dequeue() {
+bool Queue::Dequeue(int &old_value) {
     if (IsEmpty()) {
         return false;
     }
+    old_value = m_Data[(m_First + 1) % m_MaxSize];
     m_First = (m_First + 1) % m_MaxSize;
     length--;
     return true;
@@ -61,12 +67,12 @@ void Queue::PrintQueue() {
         return;
     }
     cout << "[";
-    int current = m_First + 1;
+    int current = (m_First + 1) % m_MaxSize;
     for (int i = 0; i < length - 1; i++) {
-        cout << m_Data[current] << ",";
+        cout << m_Data[current] << ", ";
         current = (current + 1) % m_MaxSize;
     }
-    cout << m_Data[current] << "]";
+    cout << m_Data[current] << "]" << endl;
 }
 
 

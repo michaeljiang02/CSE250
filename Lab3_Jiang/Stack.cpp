@@ -20,10 +20,14 @@ using namespace std;
 
 /** Constructs an empty stack. */
 Stack::Stack() {
+    m_List = LinkedList();
 }
 
 /** Deletes the stack. */
 Stack::~Stack(){
+    while (m_List.Length() > 0) {
+        m_List.RemoveFirst();
+    }
 }
 
 /** Indicates whether the stack is empty in O(1).
@@ -37,30 +41,35 @@ bool Stack::IsEmpty() {
  *  WHAT IS THE O() OF YOUR METHOD? EXPLAIN IN YOUR REPORT (or via couts in the main)
  */
 void Stack::PrintStack() {
-    //TODO
+    m_List.PrintList();
 }
 
 /** Adds a string on the top of the stack in O(1).
  * Args: New string to put on top of the stack.
  */
 void Stack::Push(const string &new_value) {
-	//TODO
+	m_List.InsertFirst(new_value);
 }
 
 /** Removes and returns the string on the top of the stack in O(1).
  * Return: string on top of the stack or "" if empty.
  */
 string Stack::Pop() {
-	//TODO
-	return string("");
+	if (IsEmpty()) {
+        return string(" ");
+    }
+    string value = m_List.RemoveFirst();
+	return value;
 }
 
 /** Returns the string on the top of the stack in O(1).
  * Return: String on top of the stack or "" if empty.
  * */
 string Stack::Top() {
-	//TODO
-	return string("");
+    if (IsEmpty()) {
+        return string(" ");
+    }
+	return m_List.GetValueAt(0);
 }
 
 
