@@ -1,8 +1,8 @@
 /****************************************************************************\
  * LinkedList.h
  *
- *  Created on:
- *      Author: YOUR NAME
+ *  Created on: Feb 13 2025
+ *      Author: Michael Jiang
  *
  *
  *  Implementation details: ?
@@ -29,8 +29,9 @@ struct Node {
 class LinkedList
 {
 	private:
-		/** Pointer to the first node. */
+	/** Node that points to the first node when accessing next and the last node when accessing last. */
         Node* sentinel;
+	/** Number of nodes in the list. */
         int length;
 
 	public:
