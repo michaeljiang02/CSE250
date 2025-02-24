@@ -1,14 +1,16 @@
 /****************************************************************************\
  * Queue.cpp
  *
- *  Created on:
- *      Author: YOUR NAME
+ *  Created on: Feb 13 2023
+ *      Author: Michael Jiang
  *
  *
- *  Implementation details: ?
- *  \\TODO
- *  You can add your implementation details here or in the header,
- *  or with the appropriate variable's or function's comments.
+ *  Implementation details:
+ *
+ *  This Queue data structure uses a circular array. Some particular design choices are:
+ *   - The addition of the length attribute to track the number of elements in the queue.
+ *   - Starting the m_Last attribute at -1 so that we do not need to implement an edge case when adding an element to an empty queue.
+ *   - Using the length attribute to implement IsEmpty() and IsFull().
  *
  \***************************************************************************/
 #include <iostream>
@@ -19,12 +21,7 @@ Queue::Queue(int new_max_size) {
     m_MaxSize = new_max_size;
     m_Data = new int[m_MaxSize];
     m_First = 0;
-    if (new_max_size == 1) {
-        m_Last = 0;
-    }
-    else {
-        m_Last = 1;
-    }
+    m_Last = -1;
     length = 0;
 }
 
@@ -45,8 +42,8 @@ bool Queue::Enqueue(int new_value) {
     if (IsFull()) {
         return false;
     }
-    m_Data[m_Last] = new_value;
     m_Last = (m_Last + 1) % m_MaxSize;
+    m_Data[m_Last] = new_value;
     length++;
     return true;
 }
@@ -55,7 +52,7 @@ bool Queue::Dequeue(int &old_value) {
     if (IsEmpty()) {
         return false;
     }
-    old_value = m_Data[(m_First + 1) % m_MaxSize];
+    old_value = m_Data[m_First];
     m_First = (m_First + 1) % m_MaxSize;
     length--;
     return true;
@@ -67,18 +64,10 @@ void Queue::PrintQueue() {
         return;
     }
     cout << "[";
-    int current = (m_First + 1) % m_MaxSize;
+    int current = (m_First) % m_MaxSize;
     for (int i = 0; i < length - 1; i++) {
         cout << m_Data[current] << ", ";
         current = (current + 1) % m_MaxSize;
     }
     cout << m_Data[current] << "]" << endl;
 }
-
-
-
-
-//TODO follow the templates of the other files
-
-
-

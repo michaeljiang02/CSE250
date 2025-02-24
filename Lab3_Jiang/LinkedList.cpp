@@ -1,14 +1,18 @@
 /****************************************************************************\
  * LinkedList.h
  *
- *  Created on:
- *      Author: YOUR NAME
+ *  Created on: Feb 13 2023
+ *      Author: Michael Jiang
  *
  *
- *  Implementation details: ?
- *  \\TODO
- *  You can add your implementation details here or in the header,
- *  or with appropriate variable's or function's comments.
+ *  Implementation details:
+ *
+ *  This is a circular doubly linked list with a sentinel node. Some particular design choices are:
+ *   - The first element of the list is always sentinel->next
+ *   - The last element of the list is always sentinel->prev
+ *   - An empty list has both pointers of the sentinel node pointing to the sentinel (itself).
+ *   - We know that the list terminates when the sentinel node is reached.
+ *   - Maintain a length attribute to track the number of nodes in the list.
  *
  \***************************************************************************/
 
@@ -23,7 +27,6 @@ LinkedList::LinkedList() {
     sentinel = new Node();
     sentinel->next = sentinel;
     sentinel->prev = sentinel;
-    sentinel->value = "0";
     length = 0;
 };
 
@@ -76,7 +79,7 @@ void LinkedList::InsertFirst(const string &new_value){
  */
 string LinkedList::RemoveFirst() {
     Node* m_First = sentinel->next;
-	if (m_First != nullptr) {
+	if (m_First != sentinel) {
 		string ret = m_First->value;
 		Node* todel = m_First;
 		sentinel->next = m_First->next;

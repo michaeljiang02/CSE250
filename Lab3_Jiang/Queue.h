@@ -20,12 +20,15 @@ private:
 		int* m_Data;
 		/** Size of the circular buffer. */
 		int m_MaxSize;
-		/** TODO PLEASE DESCRIBE */
+		/** Max capacity of the circular buffer */
 		int m_First;
-		/** TODO PLEASE DESCRIBE */
+		/** Index of the circular buffer before the first item of the queue. */
 		int m_Last;
-        // TODO: Add other instance variables or helper methods if needed
+        /** Index of the circular buffer in which the next item will be queued.
+         * IMPORTANT: This is not the index of the last item of the queue.
+         */
 		int length;
+		/** Number of items currently inside the queue. */
 
 	public:
 		/** Constructs an empty queue of maximum size new_max_size */
