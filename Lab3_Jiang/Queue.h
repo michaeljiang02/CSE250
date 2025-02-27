@@ -1,8 +1,8 @@
 /****************************************************************************\
  * Queue.h
  *
- *  Created on:
- *      Author: YOUR NAME
+ *  Created on: Feb 13 2025
+ *      Author: Michael Jiang
  *
  *
  *  Implementation details: ?
@@ -20,12 +20,13 @@ private:
 		int* m_Data;
 		/** Size of the circular buffer. */
 		int m_MaxSize;
-		/** TODO PLEASE DESCRIBE */
+		/** Max capacity of the circular buffer */
 		int m_First;
-		/** TODO PLEASE DESCRIBE */
+		/** Index of the first item of the queue */
 		int m_Last;
-        // TODO: Add other instance variables or helper methods if needed
+	        /** Index of the last item of the queue */
 		int length;
+		/** Number of items currently inside the queue. */
 
 	public:
 		/** Constructs an empty queue of maximum size new_max_size */
@@ -35,14 +36,16 @@ private:
 
 		/** Indicates whether of not the queue is empty in O(1), true if empty, false if not. */
 		bool IsEmpty();
-        /** Indicates whether of not the queue is full in O(1), true if full, false if not. */
-        bool IsFull();
+
+	        /** Indicates whether of not the queue is full in O(1), true if full, false if not. */
+	        bool IsFull();
 
 		/** Prints the content of the queue on a single line, separated by comma, eg: [3, 19, 2, 36]. */
 		void PrintQueue();
 
 		/** Inserts an element at the end of the queue, returns true if succeed, and false if the queue is already full. */
 		bool Enqueue(int new_value);
+
 		/** Removes the element at the front of the queue and returns the element in the argument,
 		 * returns true if succeed, and false if the queue is already full.  */
 		bool Dequeue(int &old_value);

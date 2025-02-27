@@ -1,12 +1,15 @@
 /****************************************************************************\
  * Stack.cpp
  *
- *  Created on:
- *      Author: YOUR NAME
+ *  Created on: Feb 13 2025
+ *      Author: Michael Jiang
  *
  *
- *  Implementation details: ?
- *  \\TODO
+ *  Implementation details:
+ *  The implementation is very simple, I am using a linked list for my stack. There are not many edge cases
+ *  because a linked list cannot be full. To push an item, we will simply call the InsertFirst() method and
+ *  RemoveFirst() method to pop an item. The implementation of these methods are found in LinkedList.cpp.
+ *
  *  You can add your implementation details here or in the header,
  *  or with the appropriate variable's or function's comments.
  *
