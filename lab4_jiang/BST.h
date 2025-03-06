@@ -58,6 +58,8 @@ class BST {
 
         void swapContent(BSTNode* x, BSTNode* y);
 
+		string removeHelper(BSTNode* current, int key);
+
         void preOrderHelper(BSTNode* current);
         void inOrderHelper(BSTNode* current);
         void postOrderHelper(BSTNode* current);

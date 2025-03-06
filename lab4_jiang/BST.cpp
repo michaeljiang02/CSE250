@@ -61,6 +61,7 @@ BST::~BST() {
 void BST::printTree() {
     if (m_root == nullptr) {
         cout << "[]" << endl;
+        return;
     }
 	BSTNode* current = _min(m_root);
     cout << "[";
@@ -142,37 +143,93 @@ void BST::swapContent(BSTNode *x, BSTNode* y) {
 }
 
 /** Deletes a the node with (key) from the tree and returns the associated (data) or empty string "" if not found. */
+
 string BST::remove(int key) {
     BSTNode* current = searchNode(key);
-    // Case 1: Not found
-    if (current == nullptr) {
-        return "";
-    }
-	// Case 2: two children
+    string value = current->data;
     if (current->left != nullptr && current->right != nullptr) {
         BSTNode* successor = _successor(current);
         swapContent(current, successor);
-        return remove(key);
+        current = successor;
     }
-    // Case 3: one child
-    if (current->left != nullptr){
-        BSTNode* left = current->left;
-        swapContent(current, left);
-        return remove(key);
+    else if (current->left == nullptr || current->right == nullptr) {
+        BSTNode* child;
+        if (current->left == nullptr) {
+            child = current->right;
+        } if (current->right == nullptr) {
+            child = current->left;
+        }
+        current->key = child->key;
+        current->data = child->data;
+        current->left = child->left;
+        current->right = child->right;
+        delete child;
     }
-    if (current->right != nullptr){
-        BSTNode* right = current->right;
-        swapContent(current, right);
-        return remove(key);
+    else {
+        if (current == m_root) {
+            m_root = nullptr;
+            return value;
+        }
+        delete current;
     }
-    // Case 4: no children
-     else {
-         string returnValue = current->data;
-         delete current;
-         return returnValue;
-     }
+    return value;
 }
 
+
+// string BST::remove(int key) {
+//     return removeHelper(m_root, key);
+// }
+//
+// string BST::removeHelper(BSTNode* current, int key) {
+//     if (current == nullptr) {
+//         return "";
+//     }
+//     if (key < current->key) {
+//         return removeHelper(current->left, key);
+//     }
+//     if (key > current->key) {
+//         return removeHelper(current->right, key);
+//     }
+//     if (key == current->key) {
+//         string value = current->data;
+//         // Case 1: No children
+//         if (current->left == nullptr && current->right == nullptr) {
+//             if (current == m_root) {
+//                 m_root = nullptr;
+//                 return value;
+//             }
+//             if (current->key < current->parent->key) {
+//                 current->parent->left = nullptr;
+//             } if (current->key > current->parent->key) {
+//                 current->parent->right = nullptr;
+//             }
+//             delete current;
+//             return value;
+//         }
+//         // // Case 2: 1 child
+//         if (current->left == nullptr || current->right == nullptr) {
+//             BSTNode* child;
+//             if (current->left == nullptr) {
+//                 child = current->right;
+//             } if (current->right == nullptr) {
+//                 child = current->left;
+//             }
+//             current->key = child->key;
+//             current->data = child->data;
+//             current->left = child->left;
+//             current->right = child->right;
+//             delete child;
+//             return value;
+//         }
+//         // Case 3: 2 children
+//         BSTNode* successor = _successor(current);
+//         current->key = successor->key;
+//         current->data = successor->data;
+//         successor->key++;
+//         removeHelper(current->right, successor->key);
+//         return value;
+//     }
+// }
 
 /** Computes and returns the height of the tree. */
 int BST::height() {
@@ -182,7 +239,7 @@ int BST::height() {
 
 /** Prints the keys (comma separated) of the tree using an preorder traversal. */
 void BST::preOrder() {
-    inOrderHelper(m_root);
+    preOrderHelper(m_root);
     cout << endl;
 }
 
@@ -192,8 +249,8 @@ void BST::preOrderHelper(BSTNode *current) {
         return;
     }
     cout << current->key << ", ";
-    inOrderHelper(current->left);
-    inOrderHelper(current->right);
+    preOrderHelper(current->left);
+    preOrderHelper(current->right);
 }
 
 /** Prints the keys (comma separated) of the tree using an inorder traversal. */
@@ -214,7 +271,7 @@ void BST::inOrderHelper(BSTNode *current) {
 
 /** Prints the keys (comma separated) of the tree using an postorder traversal. */
 void BST::postOrder() {
-    inOrderHelper(m_root);
+    postOrderHelper(m_root);
     cout << endl;
 }
 
@@ -222,8 +279,8 @@ void BST::postOrderHelper(BSTNode *current) {
     if (current == nullptr) {
         return;
     }
-    inOrderHelper(current->right);
+    postOrderHelper(current->left);
+    postOrderHelper(current->right);
     cout << current->key << ", ";
-    inOrderHelper(current->left);
 }
 
