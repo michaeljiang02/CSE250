@@ -1,11 +1,9 @@
 /****************************************************************************\
  * BST.h
  *
- *  Created on: 2025
- *      Author: YOUR NAME
+ *  Created on: March 13th 2025
+ *      Author: Michael Jiang
  *
- *
- *  Implementation details: ?
  *
 \***************************************************************************/
 
@@ -27,8 +25,6 @@ struct BSTNode {
 	int key;
 	/** Data associated to the element. */
 	string data;
-	//TODO You can add more fields here if needed
-
 };
 
 
@@ -43,7 +39,6 @@ class BST {
 	private:
 		/** Pointer to the root node of the tree, or nullptr if empty */
 		BSTNode* m_root;
-		//TODO Add your other BST private variables
 
 
 		/** Minimum: Finds and returns the node with the smallest key */
@@ -54,15 +49,20 @@ class BST {
 		/** Computes and returns the height of the node x. */
 		int _height(BSTNode* x);
 
+		/** Finds the node with the given key and return the node. */
         BSTNode* searchNode(int key);
 
-        void swapContent(BSTNode* x, BSTNode* y);
-
-		string removeHelper(BSTNode* current, int key);
-
+		/** Helper function for recursive preOrder traversal. */
         void preOrderHelper(BSTNode* current);
+
+		/** Helper function for recursive inOrder traversal. */
         void inOrderHelper(BSTNode* current);
+
+		/** Helper function for recursive postOrder traversal. */
         void postOrderHelper(BSTNode* current);
+
+		/** Helper function to delete the tree recursively. */
+		void postOrderRemove(BSTNode* current);
 
 		//TODO Add your other BST private helper methods here
 

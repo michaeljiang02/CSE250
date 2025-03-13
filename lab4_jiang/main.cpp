@@ -1,9 +1,9 @@
 /****************************************************************************\
 * main.cpp
 *
-*  Created on: 2025
-*      Author: YOUR NAME
- *
+*  Created on: March 13th 2025
+*      Author: Michael Jiang
+*
 *
 *  TODO: Make sure to demonstrate the appropriate functionality of your
 *  binary search tree by testing ALL the cases in provided documents.
@@ -67,7 +67,7 @@ int main() {
 	cout << "t->search(100) outputs " << t3->search(100) << endl;
 	cout << "t->search(5) outputs " << t3->search(5) << endl;
 	cout << "t->printTree() outputs "; t3->printTree();
-	cout << "t->height() outputs "<< t3->height() << endl;
+	cout << "t->height() outputs "<< t3->height() << endl << endl;
 
 	cout << "---------------- Question 4 ----------------" << endl << endl;
 	BST* t4 = new BST();
@@ -85,7 +85,7 @@ int main() {
 	cout << "t->search(100) outputs " << t4->search(10) << endl;
 	cout << "t->search(5) outputs " << t4->search(13) << endl;
 	cout << "t->printTree() outputs "; t4->printTree();
-	cout << "t->height() outputs "<< t4->height() << endl;
+	cout << "t->height() outputs "<< t4->height() << endl << endl;
 
 	cout << "---------------- Question 5 ----------------" << endl << endl;
 	BST* t5 = new BST();
@@ -102,9 +102,31 @@ int main() {
 	cout << "t->inOrder() outputs "; t5->inOrder();
 	cout << "t->search(15) outputs " << t5->search(15) << endl;
 	cout << "t->search(20) outputs " << t5->search(20) << endl;
-	// cout << "t->printTree() outputs "; t5->printTree();
-	cout << "t->height() outputs "<< t5->height() << endl;
+	cout << "t->printTree() outputs "; t5->printTree();
+	cout << "t->height() outputs "<< t5->height() << endl << endl;
 
+	cout << "---------------- Question 6 ----------------" << endl << endl;
+	BST* t6 = new BST();
+	t6->insert(-10, "Data-10");
+	t6->insert(-25, "Data-25");
+	t6->insert(-5, "Data-5");
+	t6->insert(-30, "Data-30");
+	t6->insert(-7, "Data-7");
+	t6->insert(-3, "Data-3");
+	t6->insert(-35, "Data-35");
+	t6->insert(-8, "Data-8");
+	t6->insert(-4, "Data-4");
+	t6->insert(6, "Data6");
+	t6->remove(-10);
+
+
+	cout << "t->preOrder() outputs "; t6->preOrder();
+	cout << "t->postOrder() outputs "; t6->postOrder();
+	cout << "t->inOrder() outputs "; t6->inOrder();
+	cout << "t->search(15) outputs " << t6->search(15) << endl;
+	cout << "t->search(20) outputs " << t6->search(20) << endl;
+	cout << "t->printTree() outputs "; t6->printTree();
+	cout << "t->height() outputs "<< t6->height() << endl << endl;
 	return 0;
 
 
