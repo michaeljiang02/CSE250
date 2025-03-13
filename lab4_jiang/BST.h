@@ -4,7 +4,7 @@
  *  Created on: March 13th 2025
  *      Author: Michael Jiang
  *
- *
+ * Implementation details: see comments below
 \***************************************************************************/
 
 #ifndef BST_H_
@@ -40,9 +40,9 @@ class BST {
 		/** Pointer to the root node of the tree, or nullptr if empty */
 		BSTNode* m_root;
 
-
 		/** Minimum: Finds and returns the node with the smallest key */
 		BSTNode* _min(BSTNode* x);
+
 		/** Successor: Returns the node following node x in key order in the whole tree */
 		BSTNode* _successor(BSTNode* x);
 
@@ -64,7 +64,6 @@ class BST {
 		/** Helper function to delete the tree recursively. */
 		void postOrderRemove(BSTNode* current);
 
-		//TODO Add your other BST private helper methods here
 
 	public:
 		/** Construct an empty binary search tree. */

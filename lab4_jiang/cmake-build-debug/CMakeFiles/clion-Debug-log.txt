@@ -20,6 +20,6 @@ CMake Deprecation Warning:
 -- Check for working CXX compiler: C:/Program Files/JetBrains/CLion/bin/mingw/bin/g++.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (3.7s)
+-- Configuring done (3.1s)
 -- Generating done (0.1s)
 -- Build files have been written to: C:/Users/s29761/Documents/CSE250/lab4_jiang/cmake-build-debug

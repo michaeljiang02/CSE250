@@ -3,7 +3,8 @@
  *
  *  Created on: March 13th 2025
  *      Author: Michael Jiang
-
+ *
+ * Implementation details: See comments below
 \***************************************************************************/
 
 #include <iostream>
