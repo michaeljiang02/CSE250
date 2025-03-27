@@ -166,6 +166,8 @@ string Network::FindShortestPath(const string& homeServer, const string& targetS
 		return_string += mystack.top() + ", ";
 		mystack.pop();
 	}
+	delete[] distances;
+	delete[] parents;
 	return return_string;
 
 }
