@@ -1,0 +1,3 @@
+C:/Users/s29761/Documents/CSE250/lab6_jiang/cmake-build-debug/CMakeFiles/lab6_jiang.dir
+C:/Users/s29761/Documents/CSE250/lab6_jiang/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/s29761/Documents/CSE250/lab6_jiang/cmake-build-debug/CMakeFiles/rebuild_cache.dir
