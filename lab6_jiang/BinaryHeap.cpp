@@ -68,9 +68,9 @@ int BinaryHeap::extractMin() {
 	}
     //Here's the actual code
     int minVertex = heap2Vertex[0];
-    swap(0, heapSize - 1);
-    heapify(0);
     heapSize--;
+    swap(0, heapSize);
+    heapify(0);
     return minVertex;
 }
 
@@ -101,7 +101,7 @@ void BinaryHeap::decreaseKey(int vertex, double newKey) {
 	}
 	//Here's the actual code
 	heapValues[heapIndex] = newKey;
-	while (vertex != 0 && heapValues[heapIndex] < heapValues[parent(heapIndex)]) {
+	while (heapIndex != 0 && heapValues[heapIndex] < heapValues[parent(heapIndex)]) {
 		swap(heapIndex, parent(heapIndex));
 		heapIndex = parent(heapIndex);
 	}
@@ -120,13 +120,15 @@ void BinaryHeap::heapify(int index) {
         throw (oss.str());
     }
     //Here's the actual code
-    while ((heapValues[index] > heapValues[left(index)] && left(index) < heapSize) || (heapValues[index] > heapValues[right(index)] && right(index) < heapSize)) {
-    	if (heapValues[left(index)] < heapValues[right(index)] && right(index) < heapSize) {
-    		swap(left(index), index);
-    		index = left(index);
-    	} else {
-    		swap(right(index), index);
-    		index = right(index);
-    	}
+    int minIndex = index;
+    if (left(minIndex) < heapSize && heapValues[left(minIndex)] < heapValues[minIndex]) {
+	minIndex = left(minIndex);
+    }
+    if (right(minIndex) < heapSize && heapValues[right(minIndex)] < heapValues[minIndex]) {
+	minIndex = right(minIndex);
+    }
+    if (minIndex != index) {
+	swap(index, minIndex);
+	heapify(minIndex);
     }
 }
