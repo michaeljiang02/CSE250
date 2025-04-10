@@ -7,6 +7,8 @@
  */
 
 #include "BinaryHeap.h"
+
+#include <iostream>
 #include <limits>
 #include <string>
 #include <sstream>
@@ -64,13 +66,15 @@ void BinaryHeap::swap(int index1, int index2) {
 int BinaryHeap::extractMin() {
 	//Deal with error
 	if (heapSize == 0) {
+		std::cout << 1;
 		throw ("Heap is empty");
 	}
     //Here's the actual code
     int minVertex = heap2Vertex[0];
-    heapSize--;
-    swap(0, heapSize);
+    swap(0, heapSize - 1);
     heapify(0);
+	heapSize--;
+	vertex2Heap[minVertex] = -1;
     return minVertex;
 }
 
@@ -82,12 +86,14 @@ int BinaryHeap::extractMin() {
 void BinaryHeap::decreaseKey(int vertex, double newKey) {
 	//Check if the vertex is a valid vertex
 	if (vertex < 0 || vertex >= vertexCount) {
+		std::cout << 2;
 		std::ostringstream oss;
 		oss << "Invalid vertex " << vertex;
 		throw (oss.str());
 	}
 	//Check if that vertex is still in the heap
 	if (vertex2Heap[vertex] == -1) {
+		std::cout << 3;
 		std::ostringstream oss;
 		oss << "Vertex " << vertex << " not in heap";
 		throw (oss.str());
@@ -95,6 +101,7 @@ void BinaryHeap::decreaseKey(int vertex, double newKey) {
 	//Check that the new key is smaller
 	int heapIndex = vertex2Heap[vertex];
 	if (newKey > heapValues[heapIndex]) {
+		std::cout << 4;
 		std::ostringstream oss;
 		oss << "New key " << newKey << " is not smaller than the old key " << heapValues[heapIndex];
 		throw (oss.str());
@@ -115,6 +122,7 @@ void BinaryHeap::decreaseKey(int vertex, double newKey) {
 void BinaryHeap::heapify(int index) {
     //Check if the index is a valid index
     if (index < 0 || index >= heapSize) {
+    	std::cout << heapSize << index;
         std::ostringstream oss;
         oss << "Invalid index " << index;
         throw (oss.str());
@@ -122,13 +130,13 @@ void BinaryHeap::heapify(int index) {
     //Here's the actual code
     int minIndex = index;
     if (left(minIndex) < heapSize && heapValues[left(minIndex)] < heapValues[minIndex]) {
-	minIndex = left(minIndex);
+		minIndex = left(minIndex);
     }
     if (right(minIndex) < heapSize && heapValues[right(minIndex)] < heapValues[minIndex]) {
-	minIndex = right(minIndex);
+		minIndex = right(minIndex);
     }
     if (minIndex != index) {
-	swap(index, minIndex);
-	heapify(minIndex);
+		swap(index, minIndex);
+		heapify(minIndex);
     }
 }

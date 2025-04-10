@@ -72,7 +72,7 @@ int main() {
 		getline(myfile, line);
 		split_line = split(line, ',');
 		string connection1 = split_line[0];
-		for (int i = 1; i < split_line.size(); i += 2) {
+		for (int i = 1; i < split_line.size(); i+=2) {
 			int latency = stoi(split_line[i]);
 			string connection2 = split_line[i + 1];
 			net->AddConnection(connection1, latency, connection2);

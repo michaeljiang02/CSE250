@@ -46,6 +46,14 @@ Network::Network(const vector<string>& IPList) {
 
 /** Frees up all allocated memory. */
 Network::~Network() {
+	for (int i = 0; i < m_NetworkSize; i++) {
+		EdgeListNode* walker = m_EdgeLists[i];
+		while (walker != nullptr) {
+			EdgeListNode* tmp = walker;
+			walker = walker->next;
+			delete tmp;
+		}
+	}
 	delete[] m_EdgeLists;
 }
 
